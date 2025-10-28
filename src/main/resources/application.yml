@@ -1,3 +1,26 @@
 spring:
   application:
-    name: ms-product
+    name: kubestock-ms-product
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:productcatalogdb}
+    username: ${DB_USER:product_user}
+    password: ${DB_PASS:product_pass}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  flyway:
+    enabled: true
+
+  springdoc:
+    swagger-ui:
+      path: /swagger-ui.html
