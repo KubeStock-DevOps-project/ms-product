@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: kubestock-postgres
+    environment:
+      POSTGRES_DB: productcatalogdb
+      POSTGRES_USER: product_user
+      POSTGRES_PASSWORD: product_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ms-product:
+    build: .
+    container_name: kubestock-ms-product
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_NAME: productcatalogdb
+      DB_USER: product_user
+      DB_PASS: product_pass
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
