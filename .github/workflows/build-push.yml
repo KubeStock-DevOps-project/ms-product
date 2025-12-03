@@ -16,7 +16,7 @@ on:
 
 env:
   AWS_REGION: ap-south-1
-  ECR_REPOSITORY: ms-product-catalog
+  ECR_REPOSITORY: ms-product
   NODE_VERSION: '18'
 
 permissions:
