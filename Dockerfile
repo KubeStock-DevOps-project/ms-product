@@ -1,21 +1,15 @@
-# syntax=docker/dockerfile:1.7
+FROM node:18-alpine
 
-FROM eclipse-temurin:21-jdk AS build
-WORKDIR /workspace
-
-COPY mvnw .
-COPY .mvn .mvn
-COPY pom.xml .
-RUN chmod +x mvnw \
-    && ./mvnw -B -ntp dependency:go-offline
-
-COPY src src
-RUN ./mvnw -B -ntp clean package -DskipTests
-
-FROM eclipse-temurin:21-jre
 WORKDIR /app
 
-COPY --from=build /workspace/target/kubestock-ms-product-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8080
+COPY package*.json ./
+RUN npm install
 
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+COPY . .
+
+EXPOSE 3002
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:3002/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+
+CMD ["node", "src/server.js"]
