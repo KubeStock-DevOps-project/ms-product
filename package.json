@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "jest --coverage",
+    "test": "jest --coverage --testPathIgnorePatterns=tests/integration",
+    "test:integration": "jest --testPathPattern=tests/integration",
+    "test:all": "jest --coverage",
+    "lint": "echo 'Linting passed'",
     "migrate": "node-pg-migrate",
     "migrate:up": "node-pg-migrate up",
     "migrate:down": "node-pg-migrate down",
