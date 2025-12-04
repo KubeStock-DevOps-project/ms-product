@@ -75,11 +75,11 @@ app.get("/metrics", async (req, res) => {
   }
 });
 
-// All routes under /api/product prefix for consistent routing
-app.use("/api/product/pricing", pricingRoutes);
-app.use("/api/product/lifecycle", productLifecycleRoutes);
-app.use("/api/product/categories", categoryRoutes);
-app.use("/api/product", productRoutes);
+// Routes - gateway strips /api/product prefix before forwarding
+app.use("/pricing", pricingRoutes);
+app.use("/lifecycle", productLifecycleRoutes);
+app.use("/categories", categoryRoutes);
+app.use("/", productRoutes);
 
 app.use((req, res) => {
   res.status(404).json({
