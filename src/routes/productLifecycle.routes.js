@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ProductLifecycleController = require("../controllers/productLifecycle.controller");
 const {
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles,
 } = require("../middlewares/token.middleware");
 
@@ -28,7 +28,7 @@ const {
  */
 router.post(
   "/lifecycle",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin", "warehouse_staff"),
   ProductLifecycleController.createProduct
 );
@@ -41,7 +41,7 @@ router.post(
  */
 router.post(
   "/:id/transition",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin"),
   ProductLifecycleController.transitionState
 );
@@ -57,7 +57,7 @@ router.post(
  */
 router.get(
   "/pending-approvals",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin"),
   ProductLifecycleController.getPendingApprovals
 );
@@ -70,7 +70,7 @@ router.get(
  */
 router.post(
   "/:id/submit-for-approval",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin", "warehouse_staff"),
   ProductLifecycleController.submitForApproval
 );
@@ -83,7 +83,7 @@ router.post(
  */
 router.post(
   "/:id/approve",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin"),
   ProductLifecycleController.approveProduct
 );
@@ -96,7 +96,7 @@ router.post(
  */
 router.post(
   "/bulk-approve",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin"),
   ProductLifecycleController.bulkApprove
 );
@@ -113,7 +113,7 @@ router.post(
  */
 router.post(
   "/:id/activate",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin"),
   ProductLifecycleController.activateProduct
 );
@@ -126,7 +126,7 @@ router.post(
  */
 router.post(
   "/:id/discontinue",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin"),
   ProductLifecycleController.discontinueProduct
 );
@@ -139,7 +139,7 @@ router.post(
  */
 router.post(
   "/:id/archive",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin"),
   ProductLifecycleController.archiveProduct
 );
@@ -175,7 +175,7 @@ router.get(
  */
 router.get(
   "/lifecycle-stats",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin"),
   ProductLifecycleController.getLifecycleStats
 );

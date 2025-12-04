@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const PricingController = require("../controllers/pricing.controller");
 const {
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles,
 } = require("../middlewares/token.middleware");
 
@@ -25,7 +25,7 @@ const {
  */
 router.post(
   "/calculate",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin", "warehouse_staff"),
   PricingController.calculatePrice
 );
@@ -38,7 +38,7 @@ router.post(
  */
 router.post(
   "/calculate-bundle",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin", "warehouse_staff"),
   PricingController.calculateBundlePrice
 );
@@ -51,7 +51,7 @@ router.post(
  */
 router.post(
   "/compare",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin", "warehouse_staff"),
   PricingController.compareCompetitors
 );
@@ -68,7 +68,7 @@ router.post(
  */
 router.get(
   "/rules",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin", "warehouse_staff"),
   PricingController.getAllPricingRules
 );
@@ -81,7 +81,7 @@ router.get(
  */
 router.post(
   "/rules",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin"),
   PricingController.createPricingRule
 );
@@ -94,7 +94,7 @@ router.post(
  */
 router.put(
   "/rules/:id",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin"),
   PricingController.updatePricingRule
 );
@@ -111,7 +111,7 @@ router.put(
  */
 router.get(
   "/history/:productId",
-  authenticateAsgardeo,
+  authenticate,
   authorizeRoles("admin", "warehouse_staff"),
   PricingController.getPriceHistory
 );

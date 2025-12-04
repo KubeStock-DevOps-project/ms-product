@@ -1,18 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const productRatingController = require("../controllers/productRating.controller");
-const { authenticateAsgardeo } = require("../middlewares/token.middleware");
+const { authenticate } = require("../middlewares/token.middleware");
 
 // Supplier routes (protected)
 router.post(
   "/:productId/rate",
-  authenticateAsgardeo,
+  authenticate,
   productRatingController.rateProduct
 );
 
 router.get(
   "/my-ratings",
-  authenticateAsgardeo,
+  authenticate,
   productRatingController.getMyRatings
 );
 
