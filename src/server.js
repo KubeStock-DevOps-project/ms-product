@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
 const helmet = require("helmet");
 const logger = require("./config/logger");
 const errorHandler = require("./middlewares/error.middleware");
@@ -35,12 +34,6 @@ setInterval(() => {
 }, 30000);
 
 app.use(helmet());
-
-// CORS only needed in development - gateway handles it in other environments
-if (process.env.NODE_ENV === 'development') {
-  app.use(cors());
-}
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
