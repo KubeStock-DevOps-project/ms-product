@@ -75,13 +75,11 @@ app.get("/metrics", async (req, res) => {
   }
 });
 
-// Business Logic Routes (Production-Grade Features)
-app.use("/api/pricing", pricingRoutes);
-app.use("/api/products", productLifecycleRoutes);
-
-// Standard CRUD Routes
-app.use("/api/categories", categoryRoutes);
-app.use("/api/products", productRoutes);
+// All routes under /api/product prefix for consistent routing
+app.use("/api/product/pricing", pricingRoutes);
+app.use("/api/product/lifecycle", productLifecycleRoutes);
+app.use("/api/product/categories", categoryRoutes);
+app.use("/api/product", productRoutes);
 
 app.use((req, res) => {
   res.status(404).json({
